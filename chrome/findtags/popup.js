@@ -4,12 +4,14 @@
 
 'use strict';
 
+console.log("asds");
+
 function click(e) {
   const elements = document.getElementsByClassName("ctags");
   for (var j = 0; j < elements.length; j++) {  elements[j].remove(); }
 
   chrome.tabs.executeScript(null,
-      {code:' var divs = document.querySelectorAll("a"); for (var i = 0; i < divs.length; i++) {  var shref = divs[i].getAttribute("href"); divs[i].style.cssText="position: relative;";     var node = document.createElement("span"); node.classList.add("ctags");  node.style.cssText = "position: absolute;width: 6rem;background: red;margin-top: -3.7rem;margin-left: -6.6rem;z-index: 9999;padding: 0.2rem;"; var textnode = document.createTextNode(shref); node.appendChild(textnode);divs[i]. appendChild(node)}'});
+      {code:' var sheet = document.createElement("style"); sheet.innerHTML = " .find-a { width: 20px; height: 20px; border-radius: 100%; position: absolute; text-align: center; color: #fff; line-height: 20px; }.find-a span { display: none; position: absolute; margin-top: 0px; color: #fff; background: #ccc; padding-left: 10px; padding-right: 10px; z-index: 99999999999 !important;}.find-a:hover span {display: inline-block;}"; document.body.appendChild(sheet); const elements = document.getElementsByTagName("a");            for (var j = 0; j < elements.length; j++) {const td = elements[j].innerHTML;var clr = "";if(elements[j].getAttribute("href") == "#"){clr = "#e60f0f";}else if(elements[j].getAttribute("href") == "javascript:void(0);"){clr = "#ffa500";}else if(elements[j].getAttribute("href") == "javascript:void(0)"){clr = "#ffa500";}else{clr = "#119608";}if (elements[j].childNodes.length == 1) {elements[j].innerHTML = td + "<span class=find-a style=background-color:"+clr+">! <span>" + elements[j].getAttribute("href") + "</span></span>";}}'});
   window.close();
 }
 
